@@ -6,11 +6,11 @@ int main() {
     // 1. Создание и базовые операции
     {
         // Создаем пустую строку
-        ::string::SmallString<32> smallStr;
+        ::ngfw::sdk::string::SmallString<32> smallStr;
         std::cout << "Empty SmallString size: " << smallStr.size() << "\n"; // Output: 0
 
         // Инициализируем строку при создании
-        ::string::SmallString<32> fromStr("Hello, SmallString!");
+        ngfw::sdk::string::SmallString<32> fromStr("Hello, SmallString!");
         std::cout << "Initialized SmallString: " << std::string_view(fromStr) << "\n";
 
         // Присваивание строки
@@ -21,7 +21,7 @@ int main() {
     // 2. Индексация, чтение и модификация
     {
         // Создаем SmallString с размером внутреннего буфера 16
-        ::string::SmallString<16> myString("SmallString");
+        ngfw::sdk::string::SmallString<16> myString("SmallString");
 
         // Доступ по индексу
         std::cout << "First character: " << myString[0] << "\n"; // Output: S
@@ -40,7 +40,7 @@ int main() {
 
     // 3. Добавление данных
     {
-        ::string::SmallString<32> str("Hello");
+        ngfw::sdk::string::SmallString<32> str("Hello");
 
         // Добавление строки через оператор +=
         str += ", ";
@@ -55,7 +55,7 @@ int main() {
 
     // 4. Итераторы
     {
-        ::string::SmallString<16> str("Iterator Example");
+        ngfw::sdk::string::SmallString<16> str("Iterator Example");
 
         // Перебор строк с использованием range-based for
         std::cout << "Iterating over characters: ";
@@ -73,7 +73,7 @@ int main() {
 
     // 5. Резервирование памяти и изменение размера
     {
-        ::string::SmallString<16> str("Resize Test");
+        ngfw::sdk::string::SmallString<16> str("Resize Test");
 
         // Проверка начального размера и емкости
         std::cout << "Initial size: " << str.size() << "\n"; // Output: 11
@@ -92,20 +92,20 @@ int main() {
     // 6. Использование с хеш-таблицами
     {
         // Создаем unordered_map с ключами SmallString
-        std::unordered_map<string::SmallString<16>, int> myMap;
+        std::unordered_map<ngfw::sdk::string::SmallString<16>, int> myMap;
 
         // Добавляем элементы
-        myMap[string::SmallString<16>("First Key")] = 42;
-        myMap[string::SmallString<16>("Second Key")] = 84;
+        myMap[ngfw::sdk::string::SmallString<16>("First Key")] = 42;
+        myMap[ngfw::sdk::string::SmallString<16>("Second Key")] = 84;
 
         // Поиск элемента
-        ::string::SmallString<16> key("First Key");
+        ngfw::sdk::string::SmallString<16> key("First Key");
         if (myMap.find(key) != myMap.end()) {
             std::cout << "Found key: " << std::string_view(key) << " with value: " << myMap[key] << "\n";
         }
 
         // Если ключ не найден
-        ::string::SmallString<16> missingKey("Missing Key");
+        ngfw::sdk::string::SmallString<16> missingKey("Missing Key");
         if (myMap.find(missingKey) == myMap.end()) {
             std::cout << "Key not found: " << std::string_view(missingKey) << "\n";
         }
@@ -113,7 +113,7 @@ int main() {
 
     // 7. Проверка на пустоту и очистка строки
     {
-        ::string::SmallString<16> str("Non-empty");
+        ngfw::sdk::string::SmallString<16> str("Non-empty");
 
         // Проверяем, пустая ли строка
         std::cout << "Is empty? " << (str.empty() ? "Yes" : "No") << "\n"; // Output: No
