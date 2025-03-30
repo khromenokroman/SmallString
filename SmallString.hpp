@@ -7,7 +7,7 @@
 
 #include <boost/container/small_vector.hpp>
 
-namespace string {
+namespace ngfw::sdk::string {
 
     /**
      * @brief Класс SmallString - альтернатива std::string с поддержкой SSO (small string optimization).
@@ -28,7 +28,7 @@ namespace string {
         SmallString() = default;
 
         /** @brief Копирующий конструктор */
-        SmallString(const SmallString<N> &) = default;
+        SmallString(SmallString<N> const &) = default;
 
         /** @brief Перемещающий конструктор. */
         explicit SmallString(SmallString<N> &&) noexcept = default;
@@ -47,7 +47,7 @@ namespace string {
         SmallString &operator=(std::string_view sv);
 
         /** @brief Оператор копирующего присваивания. */
-        SmallString &operator=(const SmallString &) = default;
+        SmallString &operator=(SmallString const &) = default;
 
         /** @brief Оператор перемещающего присваивания. */
         SmallString &operator=(SmallString &&) noexcept = default;
@@ -83,7 +83,7 @@ namespace string {
          * @param pos Позиция символа.
          * @return Символ из строки по заданной позиции.
          */
-        const char &operator[](std::size_t pos) const;
+        char const &operator[](std::size_t pos) const;
 
         /**
          * @brief Оператор индексирования для чтения/изменения символа по позиции.
@@ -98,7 +98,7 @@ namespace string {
          * @return Символ по заданной позиции.
          * @throw std::out_of_range Если индекс выходит за пределы строки.
          */
-        const char &at(std::size_t pos) const;
+        char const &at(std::size_t pos) const;
 
         /**
          * @brief Чтение/изменение символа по индексу с проверкой на выход за границы.
@@ -128,7 +128,7 @@ namespace string {
          * @note Буфер не включает завершающий нуль-символ (`\0`).
          * @return Указатель на буфер строки.
          */
-        const char *data() const noexcept;
+        char const *data() const noexcept;
 
         /**
          * @brief Возвращает указатель на данные строки (для изменения).
@@ -178,11 +178,11 @@ namespace string {
 
         /** @brief Возвращает ссылку на первый символ строки. */
         char &front();
-        const char &front() const;
+        char const &front() const;
 
         /** @brief Возвращает ссылку на последний символ строки. */
         char &back();
-        const char &back() const;
+        char const &back() const;
 
         /** @brief Добавляет символ в конец строки. */
         void push_back(char c);
@@ -226,27 +226,27 @@ namespace string {
     }
 
     template<std::size_t N>
-    bool operator==(const SmallString<N> &str, std::string_view sv) {
+    bool operator==(SmallString<N> const &str, std::string_view sv) {
         return std::string_view{str} == sv;
     }
 
     template<std::size_t N>
-    bool operator==(std::string_view sv, const SmallString<N> &str) {
+    bool operator==(std::string_view sv, SmallString<N> const &str) {
         return std::string_view{str} == sv;
     }
 
     template<std::size_t N>
-    bool operator==(const SmallString<N> &str1, const SmallString<N> &str2) {
+    bool operator==(SmallString<N> const &str1, SmallString<N> const &str2) {
         return std::string_view{str1} == std::string_view{str2};
     }
 
     template<std::size_t N>
-    bool operator!=(const SmallString<N> &str1, const SmallString<N> &str2) {
+    bool operator!=(SmallString<N> const &str1, SmallString<N> const &str2) {
         return !(str1 == str2);
     }
 
     template<std::size_t N>
-    const char &SmallString<N>::operator[](std::size_t pos) const {
+    char const &SmallString<N>::operator[](std::size_t pos) const {
         return m_data[pos];
     }
 
@@ -256,7 +256,7 @@ namespace string {
     }
 
     template<std::size_t N>
-    const char &SmallString<N>::at(std::size_t pos) const {
+    char const &SmallString<N>::at(std::size_t pos) const {
         if (size() <= pos)
             throw std::out_of_range("at");
         return m_data[pos];
@@ -295,7 +295,7 @@ namespace string {
     }
 
     template<std::size_t N>
-    const char *SmallString<N>::data() const noexcept {
+    char const *SmallString<N>::data() const noexcept {
         return m_data.data();
     }
 
@@ -315,7 +315,7 @@ namespace string {
     }
 
     template<std::size_t N>
-    const char &SmallString<N>::front() const {
+    char const &SmallString<N>::front() const {
         return m_data.front();
     }
 
@@ -325,7 +325,7 @@ namespace string {
     }
 
     template<std::size_t N>
-    const char &SmallString<N>::back() const {
+    char const &SmallString<N>::back() const {
         return m_data.back();
     }
 
@@ -389,11 +389,11 @@ namespace string {
         m_data.clear();
     }
 
-} // namespace string
+} // namespace ngfw::sdk::string
 
 template<std::size_t N>
-struct std::hash<::string::SmallString<N>> {
-    std::size_t operator()(const ::string::SmallString<N> &s) const noexcept {
+struct std::hash<::ngfw::sdk::string::SmallString<N>> {
+    std::size_t operator()(::ngfw::sdk::string::SmallString<N> const &s) const noexcept {
         return std::hash<std::string_view>{}(std::string_view{s});
     }
 };
